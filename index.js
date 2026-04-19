@@ -1,51 +1,44 @@
 // --- TASK 2: Step 2: Manipulating Existing Elements ---
 
-// 1. Select the main title (usually an h1) and update its text
-const mainTitle = document.querySelector('h1');
-if (mainTitle) {
-    mainTitle.textContent = "Flatbook Bookstore Catalog";
+// The test expects the header with ID 'header' to have this exact text
+const header = document.querySelector('#header');
+if (header) {
+    header.textContent = "Flatbooks Technical Books";
 }
 
 // --- TASK 2: Step 3: Book Elements ---
 
-// This function takes the book object and handles the DOM creation
 function renderBooks(books) {
-    // Select the container where books will be appended
-    // Ensure this ID matches your index.html (commonly #book-list or #container)
     const bookList = document.querySelector('#book-list');
 
-    books.forEach(book => {
-        // 1. Create the container for the individual book
-        const bookContainer = document.createElement('div');
-        bookContainer.className = 'book-card'; // Adds a class for styling
+    // Clear the "delete-this" placeholder if it exists (the error log showed it)
+    bookList.innerHTML = '';
 
-        // 2. Create the Title element
+    books.forEach(book => {
+        // Create the container
+        const bookContainer = document.createElement('div');
+        
+        // Create elements exactly as requested
         const bookTitle = document.createElement('h2');
         bookTitle.textContent = book.title;
 
-        // 3. Create the Author element
         const bookAuthor = document.createElement('p');
-        bookAuthor.textContent = `Author: ${book.author}`;
+        bookAuthor.textContent = book.author; // Just the name, no extra "By:" string
 
-        // 4. Create the Image element
         const bookImage = document.createElement('img');
         bookImage.src = book.image;
-        bookImage.alt = book.title;
-        bookImage.style.width = "150px"; // Keeps layout clean
 
-        // --- TASK 2: Step 3 (Append elements) ---
-        
-        // Append title, author, and image to the bookContainer
+        // Append to container
         bookContainer.appendChild(bookTitle);
         bookContainer.appendChild(bookAuthor);
         bookContainer.appendChild(bookImage);
 
-        // Finally, append the full bookContainer to the existing DOM list
+        // Append to the actual DOM
         bookList.appendChild(bookContainer);
     });
 }
 
-// Check if the bookData object exists before running the function
-if (typeof bookData !== 'undefined') {
-    renderBooks(bookData);
+// The tests are looking for the books from the 'inventory' variable
+if (typeof inventory !== 'undefined') {
+    renderBooks(inventory);
 }
