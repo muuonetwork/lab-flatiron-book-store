@@ -1,44 +1,84 @@
-// --- TASK 2: Step 2: Manipulating Existing Elements ---
 
-// The test expects the header with ID 'header' to have this exact text
-const header = document.querySelector('#header');
-if (header) {
-    header.textContent = "Flatbooks Technical Books";
-}
+// Flatbook – index.js
+// Task 2: Manipulate the DOM to display the bookstore catalog
 
-// --- TASK 2: Step 3: Book Elements ---
 
-function renderBooks(books) {
-    const bookList = document.querySelector('#book-list');
+//  Book catalog data
+const store = {
+  name: "Flatbook",
+  books: [
+    {
+      title: "The Pragmatic Programmer",
+      author: "David Thomas & Andrew Hunt",
+      image:
+        "https://covers.openlibrary.org/b/id/8739161-L.jpg",
+    },
+    {
+      title: "Clean Code",
+      author: "Robert C. Martin",
+      image:
+        "https://covers.openlibrary.org/b/id/8739220-L.jpg",
+    },
+    {
+      title: "You Don't Know JS",
+      author: "Kyle Simpson",
+      image:
+        "https://covers.openlibrary.org/b/id/10521563-L.jpg",
+    },
+    {
+      title: "Eloquent JavaScript",
+      author: "Marijn Haverbeke",
+      image:
+        "https://covers.openlibrary.org/b/id/8258524-L.jpg",
+    },
+    {
+      title: "JavaScript: The Good Parts",
+      author: "Douglas Crockford",
+      image:
+        "https://covers.openlibrary.org/b/id/6869620-L.jpg",
+    },
+  ],
+};
 
-    // Clear the "delete-this" placeholder if it exists (the error log showed it)
-    bookList.innerHTML = '';
+//  Task 2, Step 2: Manipulate existing elements 
 
-    books.forEach(book => {
-        // Create the container
-        const bookContainer = document.createElement('div');
-        
-        // Create elements exactly as requested
-        const bookTitle = document.createElement('h2');
-        bookTitle.textContent = book.title;
+// Select the existing <h1> and update its text to the store name
+const storeTitle = document.getElementById("store-title");
+storeTitle.textContent = store.name;
 
-        const bookAuthor = document.createElement('p');
-        bookAuthor.textContent = book.author; // Just the name, no extra "By:" string
+// Task 2, Step 3: Create book elements 
+// Select the container where book cards will live
+const bookList = document.getElementById("book-list");
 
-        const bookImage = document.createElement('img');
-        bookImage.src = book.image;
+// Loop over every book in the catalog
+store.books.forEach((book) => {
+  // 1. bookContainer – wrapper card for one book
+  const bookContainer = document.createElement("div");
+  bookContainer.classList.add("book-container");
 
-        // Append to container
-        bookContainer.appendChild(bookTitle);
-        bookContainer.appendChild(bookAuthor);
-        bookContainer.appendChild(bookImage);
+  // 2. bookImage – the cover art
+  const bookImage = document.createElement("img");
+  bookImage.src = book.image;
+  bookImage.alt = book.title;
+  bookImage.classList.add("book-image");
 
-        // Append to the actual DOM
-        bookList.appendChild(bookContainer);
-    });
-}
+  // 3. bookTitle – heading with the book's title
+  const bookTitle = document.createElement("h2");
+  bookTitle.textContent = book.title;
+  bookTitle.classList.add("book-title");
 
-// The tests are looking for the books from the 'inventory' variable
-if (typeof inventory !== 'undefined') {
-    renderBooks(inventory);
-}
+  // 4. bookAuthor – paragraph with the author's name
+  const bookAuthor = document.createElement("p");
+  bookAuthor.textContent = `By ${book.author}`;
+  bookAuthor.classList.add("book-author");
+
+  // append child elements to bookContainer 
+  bookContainer.appendChild(bookImage);
+  bookContainer.appendChild(bookTitle);
+  bookContainer.appendChild(bookAuthor);
+
+  // Append bookContainer to the main book list 
+  bookList.appendChild(bookContainer);
+});
+
+console.log(`${store.name} loaded ${store.books.length} book(s) successfully!`);
