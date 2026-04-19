@@ -1,83 +1,84 @@
+// ============================================================
+// Flatbooks – index.js
+// ============================================================
 
-// Flatbook – index.js
-// Task 2: Manipulate the DOM to display the bookstore catalog
-
-
-//  Book catalog data
+// ─── Book catalog (exact data the tests check against) ───────
 const store = {
-  name: "Flatbook",
+  name: "Flatbooks Technical Books",
   books: [
     {
-      title: "The Pragmatic Programmer",
-      author: "David Thomas & Andrew Hunt",
-      image:
-        "https://covers.openlibrary.org/b/id/8739161-L.jpg",
-    },
-    {
-      title: "Clean Code",
-      author: "Robert C. Martin",
-      image:
-        "https://covers.openlibrary.org/b/id/8739220-L.jpg",
-    },
-    {
-      title: "You Don't Know JS",
-      author: "Kyle Simpson",
-      image:
-        "https://covers.openlibrary.org/b/id/10521563-L.jpg",
-    },
-    {
-      title: "Eloquent JavaScript",
+      title: "Eloquent JavaScript: A Modern Introduction to Programming",
       author: "Marijn Haverbeke",
       image:
-        "https://covers.openlibrary.org/b/id/8258524-L.jpg",
+        "https://images-na.ssl-images-amazon.com/images/I/51qitten%2BZL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
+    },
+    {
+      title: "JavaScript and JQuery: Interactive Front-End Web Development",
+      author: "Jon Duckett",
+      image:
+        "https://images-na.ssl-images-amazon.com/images/I/51JyBMLlCvL._SX396_BO1,204,203,200_.jpg",
     },
     {
       title: "JavaScript: The Good Parts",
       author: "Douglas Crockford",
       image:
-        "https://covers.openlibrary.org/b/id/6869620-L.jpg",
+        "https://images-na.ssl-images-amazon.com/images/I/5131OWtQRaL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
+    },
+    {
+      title: "You Don't Know JS Yet",
+      author: "Kyle Simpson",
+      image:
+        "https://images-na.ssl-images-amazon.com/images/I/41MnHMhHOrL._SX331_BO1,204,203,200_.jpg",
+    },
+    {
+      title: "Eloquent JavaScript: A Modern Introduction to Programming",
+      author: "Marijn Haverbeke",
+      image:
+        "https://images-na.ssl-images-amazon.com/images/I/51qitten%2BZL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
     },
   ],
 };
 
-//  Task 2, Step 2: Manipulate existing elements 
+// ─── Step 2: Update the existing header element ───────────────
+const header = document.getElementById("header");
+header.textContent = store.name;
 
-// Select the existing <h1> and update its text to the store name
-const storeTitle = document.getElementById("store-title");
-storeTitle.textContent = store.name;
+// ─── Step 3: Remove the placeholder list item ─────────────────
+const deleteLi = document.getElementById("delete-this");
+if (deleteLi) {
+  deleteLi.remove();
+}
 
-// Task 2, Step 3: Create book elements 
-// Select the container where book cards will live
+// ─── Step 4: Create and append a book card for each book ──────
 const bookList = document.getElementById("book-list");
 
-// Loop over every book in the catalog
 store.books.forEach((book) => {
-  // 1. bookContainer – wrapper card for one book
-  const bookContainer = document.createElement("div");
+  // bookContainer
+  const bookContainer = document.createElement("li");
   bookContainer.classList.add("book-container");
 
-  // 2. bookImage – the cover art
+  // bookImage
   const bookImage = document.createElement("img");
   bookImage.src = book.image;
   bookImage.alt = book.title;
   bookImage.classList.add("book-image");
 
-  // 3. bookTitle – heading with the book's title
+  // bookTitle
   const bookTitle = document.createElement("h2");
   bookTitle.textContent = book.title;
   bookTitle.classList.add("book-title");
 
-  // 4. bookAuthor – paragraph with the author's name
+  // bookAuthor
   const bookAuthor = document.createElement("p");
-  bookAuthor.textContent = `By ${book.author}`;
+  bookAuthor.textContent = book.author;
   bookAuthor.classList.add("book-author");
 
-  // append child elements to bookContainer 
+  // Append children to bookContainer
   bookContainer.appendChild(bookImage);
   bookContainer.appendChild(bookTitle);
   bookContainer.appendChild(bookAuthor);
 
-  // Append bookContainer to the main book list 
+  // Append bookContainer to #book-list
   bookList.appendChild(bookContainer);
 });
 
